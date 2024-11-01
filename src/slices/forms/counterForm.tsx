@@ -238,8 +238,6 @@ const subFormSlice = createSlice({
             return field;
           }) || [];
 
-          // const sortedFields = sortFields(updatedFields);
-
           return {
             ...sub,
             Fields: updatedFields,
@@ -267,15 +265,6 @@ const subFormSlice = createSlice({
       });
       sortSubForms(state.subForms);
     },
-    // setExpected: (state, action: PayloadAction<{ formData: Record<string, any> }>) => {
-    //   const { formData } = action.payload;
-
-    //   state.subForms.forEach((sub) => {
-    //     sub.fields.forEach((field) => {
-    //       field.expectedResult = formData[field.matchCheckListId] || null;
-    //     });
-    //   });
-    // },
     reset: () => initialState,
     defaultDataForm: (state, action: PayloadAction<{
       currentField: BaseFormState;

@@ -16,11 +16,10 @@ const getEnvVars = (env = "") => {
   }
 };
 
-const environment = process.env.APP_ENV || "development";
-
+const environment = process.env.APP || "development";
 export default {
   expo: {
-    scheme: "acme",
+    scheme: "myapp",
     version: "1.0.0",
     userInterfaceStyle: "automatic",
     orientation: "landscape",
@@ -40,9 +39,9 @@ export default {
     ],
     name: "PMChecklist",
     slug: "PMChecklist",
-  },
-  extra: getEnvVars(environment),
-  experiments: {
-    typedRoutes: true,
+    extra: getEnvVars(environment),
+    experiments: {
+      typedRoutes: true,
+    },
   },
 };

@@ -6,44 +6,33 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { ThemeProvider } from "@/provider/theme";
 import { ResponsiveProvider } from "@/provider/responsive";
+import { AuthProvider } from "@/provider/auth";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Drawer } from 'expo-router/drawer';
-import { useTheme } from "@/contexts";
+import { useTheme, useAuth } from "@/contexts";
+import { store } from "@/stores";
+import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastProvider } from "@/provider/toastify";
+import Navigation from "./nav/Navigation";
+
+const queryClient = new QueryClient();
+SplashScreen.preventAutoHideAsync();
 
 const SetTheme = () => {
   const { theme } = useTheme();
+  const { screens, loading } = useAuth();
+
+  console.log(screens);
+
+  if (!loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
 
   return (
     <PaperProvider theme={theme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Drawer
-          screenOptions={{
-            unmountOnBlur: true,
-          }}
-        >
-          <Drawer.Screen
-            name="index"
-            options={{
-              drawerLabel: 'Home',
-              title: 'Home',
-            }}
-          />
-          <Drawer.Screen
-            name="settings/SettingScreen"
-            options={{
-              drawerLabel: 'Settings',
-              title: 'Settings',
-            }}
-          />
-          <Drawer.Screen
-            name="settings/ConfigulationScreen"
-            options={{
-              drawerLabel: 'Configuration',
-              title: 'Configuration',
-            }}
-          />
-        </Drawer>
+        <Navigation />
       </GestureHandlerRootView>
     </PaperProvider>
   );
@@ -83,7 +72,15 @@ export default function Layout() {
   return (
     <ThemeProvider>
       <ResponsiveProvider>
-        <SetTheme />
+        <ToastProvider>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <Provider store={store}>
+                <SetTheme />
+              </Provider>
+            </AuthProvider>
+          </QueryClientProvider>
+        </ToastProvider>
       </ResponsiveProvider>
     </ThemeProvider>
   );

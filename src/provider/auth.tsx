@@ -14,14 +14,14 @@ const fetchGroupUser = async (): Promise<GroupUsers[]> => {
   return response.data.data ?? [];
 };
 
-interface AuthContextType {
+export interface AuthContextProps {
   session: { UserID: string, UserName: string, GUserID: string, GUserName: string, IsActive: boolean };
   loading: boolean;
   screens: { name: string }[];
   login: (username: string) => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -88,7 +88,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         GeneralUser: ["Home", "ScanQR", "InputFormMachine", "Setting", "Permission_deny"]
       };
 
-      setScreens(screenMapping[session.GUserName] ? screenMapping[session.GUserName].map(name => ({ name })) : [{ name: "Permission_deny" }]);
+      setScreens(screenMapping[session.GUserName] ? screenMapping[session.GUserName].map((name) => ({ name })) : [{ name: "Permission_deny" }]);
     }
   }, [session]);
 
@@ -99,12 +99,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
 };
