@@ -1,14 +1,12 @@
-import React, { useState, useCallback, useMemo } from "react";
-import axiosInstance from "@/config/axios";
-import { setForm, setSubForm, setField } from "@/slices";
-import { useToast } from "@/app/contexts";
+import { useState, useCallback, useMemo } from "react";
+import axiosInstance from "@/configs/axios";
+import { setForm, setSubForm, setField } from "@/slices/forms";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
-import { SubForm, FormData, BaseFormState, BaseForm, BaseSubForm } from '@/typing/form';
-import { CheckListType, CheckListOption, Checklist, DataType, GroupCheckListOption, Machine } from '@/typing/type';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { ActivityIndicator } from "react-native";
+import { SubForm, FormData, BaseFormState, BaseSubForm } from '@/types/form';
+import { CheckListType, CheckListOption, Checklist, DataType, GroupCheckListOption, Machine } from '@/types/type';
+import { useQuery, useQueryClient } from 'react-query';
 
 const fetchCheckList = async (): Promise<Checklist[]> => {
     const response = await axiosInstance.post("CheckList_service.asmx/GetCheckLists");
@@ -53,7 +51,7 @@ const useForm = (route: any) => {
     const [found, setFound] = useState<boolean>(false);
     const [expectedResult, setExpectedResult] = useState<{ [key: string]: any }>({});
 
-    const { handleError } = useToast();
+    // const { handleError } = useToast();
     const queryClient = useQueryClient();
 
     const fetchAllData = useCallback(async () => {
@@ -86,10 +84,10 @@ const useForm = (route: any) => {
                 machine
             };
         } catch (error) {
-            handleError(error);
+            // handleError(error);
             return null;
         }
-    }, [handleError]);
+    }, []);
 
     const { data, isLoading } = useQuery('allData', fetchAllData);
 
@@ -107,11 +105,11 @@ const useForm = (route: any) => {
             setFound(status);
             return formData;
         } catch (error) {
-            handleError(error);
+            // handleError(error);
             setFound(false);
             return null;
         }
-    }, [handleError]);
+    }, []);
 
     const createSubFormsAndFields = useCallback((formData: FormData, expectedResult?: { [key: string]: any }) => {
         const subForms: SubForm[] = [];

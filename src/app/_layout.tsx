@@ -17,7 +17,11 @@ const SetTheme = () => {
   return (
     <PaperProvider theme={theme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Drawer>
+        <Drawer
+          screenOptions={{
+            unmountOnBlur: true,
+          }}
+        >
           <Drawer.Screen
             name="index"
             options={{
@@ -30,6 +34,13 @@ const SetTheme = () => {
             options={{
               drawerLabel: 'Settings',
               title: 'Settings',
+            }}
+          />
+          <Drawer.Screen
+            name="settings/ConfigulationScreen"
+            options={{
+              drawerLabel: 'Configuration',
+              title: 'Configuration',
             }}
           />
         </Drawer>

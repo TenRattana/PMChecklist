@@ -1,17 +1,35 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "allowJs": true,
+    "jsx": "react-native",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "paths": {
       "@/*": [
         "./src/*"
       ]
     }
   },
-  "extends": "expo/tsconfig.base",
   "include": [
     "global.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "nativewind-env.d.ts"
-  ]
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "extends": "expo/tsconfig.base"
 }
