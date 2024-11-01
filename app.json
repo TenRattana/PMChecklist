@@ -13,7 +13,8 @@
         {
           "origin": "https://n"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "name": "PMChecklist",
     "slug": "PMChecklist"
